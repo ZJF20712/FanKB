@@ -107,7 +107,7 @@ void eeconfig_write_rgblight_default(void)
  //   dprintf("eeconfig_write_rgblight_default\n");
     rgblight_config.enable = 1;
     rgblight_config.mode = 1;
-    rgblight_config.hue = 640;
+    rgblight_config.hue = 480;
     rgblight_config.sat = 255;
     rgblight_config.val = 255;
     eeconfig_write_rgblight(rgblight_config.raw);
@@ -168,8 +168,7 @@ void rgblight_mode(uint8_t mode)
         rgblight_timer_enable();
     }
     //
-    rgblight_config.mode = 1;
-    //rgblight_config.hue = 360;
+    rgblight_config.mode = 2;
     rgblight_config.hue = 480;
     //
 
