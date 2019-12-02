@@ -168,7 +168,7 @@ void rgblight_mode(uint8_t mode)
         rgblight_timer_enable();
     }
     //
-    rgblight_config.mode = 2;
+    rgblight_config.mode = 3;
     rgblight_config.hue = 480;
     //
 

@@ -59,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RTSEN 0
     #define CTSEN 0
 
-    #define SERIAL_UART_BAUD        115200
+    #define SERIAL_UART_BAUD        57600
     #define SERIAL_UART_DATA        UDR1
     #define SERIAL_UART_UBRR        ((F_CPU/(8.0*SERIAL_UART_BAUD)-1+0.5))
     #define SERIAL_UART_RXD_VECT    USART1_RX_vect
