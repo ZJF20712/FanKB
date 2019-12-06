@@ -109,7 +109,7 @@ static void send_keyboard(report_keyboard_t *report)
         report->keys[4],
         report->keys[5]);
     ble51_puts(ble51_buf);
-    const char *result = ble51_gets(TIMEOUT);
+//    const char *result = ble51_gets(TIMEOUT);
 //    if (memcmp(result, "ERROR", 5) == 0) {
 //        dprint("error\n");
 //    } 
@@ -123,7 +123,7 @@ static void send_mouse(report_mouse_t *report)
         report->v,
         report->h);
     ble51_puts(ble51_buf);
-    const char *result = ble51_gets(TIMEOUT);
+ //   const char *result = ble51_gets(TIMEOUT);
  //   if (memcmp(result, "ERROR", 5) == 0) {
  //       dprint("error\n");
  //   } 
@@ -146,7 +146,7 @@ static void send_consumer(uint16_t data)
     ble51_puts("AT+BLEHIDCONTROLKEY=");
     sprintf(ble51_buf, "%d\n",data);
     ble51_puts(ble51_buf);
-    const char *result = ble51_gets(TIMEOUT);
+ //   const char *result = ble51_gets(TIMEOUT);
  //   if (memcmp(result, "ERROR", 5) == 0) {
  //       dprint("error\n");
  //   } 

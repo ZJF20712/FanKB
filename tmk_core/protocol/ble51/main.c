@@ -80,7 +80,7 @@ int main(void)
 
 //    print("Keyboard start\n");
     kb_started = 1;
-    watchdog_on();
+    //watchdog_on();
     while (1) {
 	    BLE51_PowerState = 1;
         if (BLE51_PowerState > 1) { 
@@ -97,7 +97,7 @@ int main(void)
             }
         }
         if (BLE51_PowerState < 4){
-            wdt_reset();
+            //wdt_reset();
             if (BLE51_PowerState == 1) 
 		keyboard_task();
             ble51_task();
