@@ -32,60 +32,54 @@ void ble51_task_init(void)
 
 void ble51_task(void)
 {
-    if (BT_POWERED) {
-        if (USB_DeviceState != DEVICE_STATE_Configured) {
- //           if (BLE51_PowerState == 1 && (timer_elapsed32(kb_idle_timer) > 15000)) {
-		if (BLE51_PowerState == 1 && (timer_elapsed32(kb_idle_timer) > 30000)) {
- //               print("dozing\n");
-                BLE51_PowerState = 3;
-            }
-
-//            if (BLE51_PowerState == 3 && (timer_elapsed32(kb_idle_timer) > 9000000)) {
-			if (BLE51_PowerState == 3 && (timer_elapsed32(kb_idle_timer) > 18000000)) {
-
- //               print("BT is idle for a long time. Turn off. \n");
-                BLE51_PowerState = 4;
-                turn_off_bt();
-            }
-        }
-        if (ble_set_code > 0) {
-            if (ble_set_code == KC_I || ble_set_code == KC_O) {
-                ble51_puts("AT+GAPSETADVDATA=02-01-0");
-                if (ble_set_code == KC_O) ble51_puts("4\n");
-                else ble51_puts("6\n");
-                ble_set_code = 0;
-            } else if (ble_set_code == KC_R) {
-                ble51_puts("AT+GAPDELBONDS\n");
-                ble_set_code = KC_I;
-            }
-            ble51_gets(TIMEOUT);
-        }
-    }
-
     /* Bluetooth mode | USB mode */
-    if (!force_usb) {
-        if (host_get_driver() != &ble51_driver) {
-            clear_keyboard(); 
-            print("Bluetooth\n");
-            usb_nkro_status = keyboard_nkro;
-            keyboard_nkro = 0;
-            host_set_driver(&ble51_driver);
-        } else if (!usb_connected && (USB_DeviceState == DEVICE_STATE_Configured)) {
-            force_usb = 1;
-            usb_connected = 1;
-        }
-    } else {
-        if (host_get_driver() != &lufa_driver) {
-            usb_connected = 1;
-            clear_keyboard();
-            print("USB\n");
-            keyboard_nkro = usb_nkro_status;
-            host_set_driver(&lufa_driver);
-        } else if (USB_DeviceState != DEVICE_STATE_Configured) {
-            force_usb = 0;
-            usb_connected = 0;
-        }           
-    }
+	if(USB_DeviceState == DEVICE_STATE_Configured){
+		force_usb = 1;
+		//usb_connected = 1;	
+	}else{
+		force_usb = 0;	
+		//usb_connected = 0;
+	}
+	if(force_usb){
+		if(host_get_driver() != &lufa_driver){
+			clear_keyboard();
+			keyboard_nkro = usb_nkro_status;
+			host_set_driver(&lufa_driver);	
+		}	
+    	}else{
+		if(host_get_driver() != &ble51_driver){
+			clear_keyboard();
+			usb_nkro_status = keyboard_nkro;
+			keyboard_nkro = 0;
+			host_set_driver(&ble51_driver);
+		}	
+	}
+
+	if (BT_POWERED) {
+        	if (USB_DeviceState != DEVICE_STATE_Configured) {
+  	    		if (BLE51_PowerState == 1 && (timer_elapsed32(kb_idle_timer) > 30000)) {
+                		//print("dozing\n");
+                		BLE51_PowerState = 2;
+            		}
+       	    		if (BLE51_PowerState == 2 && (timer_elapsed32(kb_idle_timer) > 18000000)) {
+                	//print("BT is idle for a long time. Turn off. \n");
+                		BLE51_PowerState = 3;
+                		turn_off_bt();
+            		}
+        	}
+        	if (ble_set_code > 0) {
+            		if (ble_set_code == KC_I || ble_set_code == KC_O) {
+               			 ble51_puts("AT+GAPSETADVDATA=02-01-0");
+                		if (ble_set_code == KC_O) ble51_puts("4\n");
+                		else ble51_puts("6\n");
+                		ble_set_code = 0;
+            		} else if (ble_set_code == KC_R) {
+                		ble51_puts("AT+GAPDELBONDS\n");
+                		ble_set_code = KC_I;
+            		}
+            		ble51_gets(TIMEOUT);
+        	}
+    	}
 }    
   
 bool command_extra(uint8_t code)

@@ -82,6 +82,7 @@ int main(void)
     kb_started = 1;
     watchdog_on();
     while (1) {
+	    BLE51_PowerState = 1;
         if (BLE51_PowerState > 1) { 
             select_all_rows();
             suspend_power_down();
@@ -89,7 +90,7 @@ int main(void)
                 unselect_rows();
                 watchdog_on();
                 suspend_wakeup_init();
-                if (BLE51_PowerState >= 4) {
+                if (BLE51_PowerState == 3) {
                     turn_on_bt();
                 }
                 BLE51_PowerState = 1;
@@ -97,8 +98,8 @@ int main(void)
         }
         if (BLE51_PowerState < 4){
             wdt_reset();
-            if (BLE51_PowerState <= 1) 
-				keyboard_task();
+            if (BLE51_PowerState == 1) 
+		keyboard_task();
             ble51_task();
         }
     }
