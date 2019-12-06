@@ -113,7 +113,8 @@ uint8_t matrix_scan(void)
             } while (--count);
             matrix_row_t *row = &matrix[matrix_current_row];
             matrix_row_t mask = ((matrix_row_t)1 << i);
-            switch (*debounce & DEBOUNCE_MASK) {
+
+	        switch (*debounce & DEBOUNCE_MASK) {
                 case DEBOUNCE_MASK:
 #if DEBOUNCE > 1
                 case (DEBOUNCE_MASK >> 1):
@@ -145,6 +146,7 @@ uint8_t matrix_scan(void)
 #endif
 #endif
 #endif
+
                     if ((*row & mask) == 0) {
                         *row |= mask;
                     }

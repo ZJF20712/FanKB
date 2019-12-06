@@ -79,6 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 /* BT Power Control */
 #define BT_POWERED    !(PORTB&(1<<PB3))
+//#define BT_POWERED			1
 #define bt_power_init()    do { DDRB |= (1<<PB3); PORTB &= ~(1<<PB3); } while(0)
 #define turn_off_bt()    do { PORTB |= (1<<PB3); } while(0)
 #define turn_on_bt()    do { PORTB &= ~(1<<PB3); } while(0)

@@ -35,7 +35,7 @@ void ble51_init(void)
     bt_power_init();
     serial_init();
 //    print("Serial Init\n");
-    ble51_hid_en();
+//    ble51_hid_en();
 //    print("Ble Init");
 }
 
