@@ -61,7 +61,7 @@ void ble51_hid_en(void)
 
 int16_t ble51_getc(void)
 {
-    return serial_recv2();
+    //return serial_recv2();
 }
 
 const char *ble51_gets(uint16_t timeout)
@@ -83,13 +83,13 @@ const char *ble51_gets(uint16_t timeout)
 
 void ble51_putc(uint8_t c)
 {
-    serial_send(c);
+    //serial_send(c);
 }
 
 void ble51_puts(char *s)
 {
-    while (*s)
-    serial_send(*s++);
+    //while (*s)
+    //serial_send(*s++);
 }
 
 
