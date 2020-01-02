@@ -7,6 +7,7 @@
 #include "timer.h"
 #include "debug.h"
 #define TIMEOUT 100
+#define First_cfg
 
 /* Host driver */
 static uint8_t keyboard_leds(void);
@@ -35,10 +36,13 @@ void ble51_init(void)
     bt_power_init();
     serial_init();
 //    print("Serial Init\n");
-//    ble51_hid_en();
+#ifdef First_cfg
+    ble51_hid_en();
+#endif
 //    print("Ble Init");
 }
 
+#ifdef First_cfg
 void ble51_hid_en(void)
 {
     ble51_puts("ATE=1\n");
@@ -58,10 +62,11 @@ void ble51_hid_en(void)
     ble51_puts("ATZ\n");
     wait_ms(4);
 }
+#endif
 
 int16_t ble51_getc(void)
 {
-    //return serial_recv2();
+    return serial_recv2();
 }
 
 const char *ble51_gets(uint16_t timeout)
@@ -83,13 +88,13 @@ const char *ble51_gets(uint16_t timeout)
 
 void ble51_putc(uint8_t c)
 {
-    //serial_send(c);
+    serial_send(c);
 }
 
 void ble51_puts(char *s)
 {
-    //while (*s)
-    //serial_send(*s++);
+    while (*s)
+    serial_send(*s++);
 }
 
 

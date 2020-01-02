@@ -57,7 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     /* iom32u4.h has no definition of UCSR1D. copy from iom32u2.h */
     #define UCSR1D _SFR_MEM8(0xCB)
     #define RTSEN 0
-    #define CTSEN 0
+    #define CTSEN 1
 
     #define SERIAL_UART_BAUD        57600
     #define SERIAL_UART_DATA        UDR1

@@ -557,6 +557,7 @@ void rgblight_effect_raindrop(uint8_t interval)
 
 void rgblight_effect_horse_race(void)
 {
+/*
     static uint8_t step = 0;
     static uint8_t start_wait = 0;
     uint8_t i,j;
@@ -601,11 +602,12 @@ void rgblight_effect_horse_race(void)
             } 
         }
         rgblight_set();
-    }
+    }*/
 }
 
 void rgblight_effect_hit(void)
 {
+/*
     static uint8_t step = 0;
     int8_t i,j;
     uint16_t hue;
@@ -649,18 +651,21 @@ void rgblight_effect_hit(void)
             }
         }
         rgblight_set();
-    }
+    }*/
 }
 
 void rgblight_effect_rainbow_mood(uint8_t interval)
 {
+/*
     static uint16_t current_hue = 0;
     rgblight_sethsv_noeeprom(current_hue, rgblight_config.sat, rgblight_config.val);
     current_hue = (current_hue + interval * 3) % 768;
+*/
 }
 
 void rgblight_effect_rainbow_swirl(uint8_t interval)
 {
+/*
     static uint16_t current_hue=0;
     uint16_t hue;
     int8_t i,j;
@@ -686,12 +691,12 @@ void rgblight_effect_rainbow_swirl(uint8_t interval)
         current_hue = (current_hue + interval2*16) % 768;
     } else {
         current_hue = (current_hue + 768 - interval2*16) % 768;
-    }
+   }*/
 }
 
 void rgblight_effect_snake(uint8_t interval)
 {
-    static int8_t pos1 = 0 - RGBLIGHT_EFFECT_SNAKE_LENGTH;
+/*    static int8_t pos1 = 0 - RGBLIGHT_EFFECT_SNAKE_LENGTH;
     static uint8_t sled_step = 0;
     uint8_t i;
     int8_t increament = 1;
@@ -708,7 +713,7 @@ void rgblight_effect_snake(uint8_t interval)
         if (pos1 > MATRIX_COLS*MATRIX_ROWS) pos1 = 0;
         else if (pos1 < 0) pos1 = MATRIX_COLS*MATRIX_ROWS;
         rgblight_set();
-    }
+    }*/
 }
 /*
 void rgblight_effect_knight(uint8_t interval)
