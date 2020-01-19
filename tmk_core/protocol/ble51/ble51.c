@@ -45,7 +45,7 @@ void ble51_init(void)
 #ifdef First_cfg
 void ble51_hid_en(void)
 {
-    ble51_puts("ATE=1\n");
+    ble51_puts("ATE=0\n");
     wait_ms(4);
     ble51_puts("AT+GAPINTERVALS\n");
     wait_ms(4);
@@ -114,10 +114,10 @@ static void send_keyboard(report_keyboard_t *report)
         report->keys[4],
         report->keys[5]);
     ble51_puts(ble51_buf);
-//    const char *result = ble51_gets(TIMEOUT);
-//    if (memcmp(result, "ERROR", 5) == 0) {
-//        dprint("error\n");
-//    } 
+    const char *result = ble51_gets(TIMEOUT);
+    if (memcmp(result, "ERROR", 5) == 0) {
+        dprint("error\n");
+    } 
 }
 static void send_mouse(report_mouse_t *report)
 {
@@ -128,17 +128,17 @@ static void send_mouse(report_mouse_t *report)
         report->v,
         report->h);
     ble51_puts(ble51_buf);
- //   const char *result = ble51_gets(TIMEOUT);
- //   if (memcmp(result, "ERROR", 5) == 0) {
- //       dprint("error\n");
- //   } 
+   const char *result = ble51_gets(TIMEOUT);
+   if (memcmp(result, "ERROR", 5) == 0) {
+       dprint("error\n");
+   } 
 
     ble51_puts("AT+BLEHIDMOUSEBUTTON=");
     sprintf(ble51_buf, "%d\n", report->buttons);
     ble51_puts(ble51_buf);
- //   if (memcmp(ble51_gets(TIMEOUT), "ERROR", 5) == 0) {
- //       dprint("error\n");
- //   } 
+   if (memcmp(ble51_gets(TIMEOUT), "ERROR", 5) == 0) {
+       dprint("error\n");
+   } 
 }
 
 static void send_system(uint16_t data)
@@ -151,10 +151,10 @@ static void send_consumer(uint16_t data)
     ble51_puts("AT+BLEHIDCONTROLKEY=");
     sprintf(ble51_buf, "%d\n",data);
     ble51_puts(ble51_buf);
- //   const char *result = ble51_gets(TIMEOUT);
- //   if (memcmp(result, "ERROR", 5) == 0) {
- //       dprint("error\n");
- //   } 
+    const char *result = ble51_gets(TIMEOUT);
+    if (memcmp(result, "ERROR", 5) == 0) {
+       dprint("error\n");
+   } 
 }
 
 

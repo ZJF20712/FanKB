@@ -244,8 +244,8 @@ static void  init_cols(void)
     // Input with pull-up(DDR:0, PORT:1)
     DDRF  &= ~(1<<PF0 | 1<<PF1 );
     PORTF |=  (1<<PF0 | 1<<PF1 );
-    PORTE |=  (1<<PE6);
     DDRE  &= ~(1<<PE6);
+    PORTE |=  (1<<PE6);
     DDRD  &= ~(1<<PD4 | 1<<PD7 | 1<<PD6);
     PORTD |=  (1<<PD4 | 1<<PD7 | 1<<PD6);
     DDRC  &= ~(1<<PC7 | 1<<PC6);
@@ -273,9 +273,9 @@ static uint8_t get_col(uint8_t col)
             case 8: return PINB&(1<<PB7) ? 0 : 1;
             case 9: return PINB&(1<<PB5) ? 0 : 1;
             case 10: return PINB&(1<<PB4) ? 0 : 1;
-			case 11: return PIND&(1<<PD7) ? 0 : 1;
-			case 12: return PIND&(1<<PD6) ? 0 : 1;
-			case 13: return PINB&(1<<PB0) ? 0 : 1;
+            case 11: return PIND&(1<<PD7) ? 0 : 1;
+	    case 12: return PIND&(1<<PD6) ? 0 : 1;
+	    case 13: return PINB&(1<<PB0) ? 0 : 1;
             default: return 0;
         }
 }
