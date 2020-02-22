@@ -33,16 +33,17 @@ enum function_id {
     HOST_SWITCH,
     TRICKY_ALT_F4,
 };
-enum function_opt {
 #ifdef KeyB_40Key
+enum function_opt {
     ESC_GRV,
     ENT_QUOT,
     DOT_SLSH,
     UP_SLSH,
     L_SCLN,
     BSPC_BSLS,
-#endif
+
 };
+#endif
 enum macro_id {
     HOME_PGUP,
     END_PGDN,
