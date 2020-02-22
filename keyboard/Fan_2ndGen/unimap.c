@@ -41,7 +41,6 @@ enum function_opt {
     UP_SLSH,
     L_SCLN,
     BSPC_BSLS,
-
 };
 #endif
 enum macro_id {
