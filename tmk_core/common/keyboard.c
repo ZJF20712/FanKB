@@ -139,7 +139,7 @@ void keyboard_task(void)
             }
             matrix_ghost[r] = matrix_row;
 #endif
-            if (debug_matrix) matrix_print();
+            //if (debug_matrix) matrix_print();
             for (uint8_t c = 0; c < MATRIX_COLS; c++) {
                 if (matrix_change & ((matrix_row_t)1<<c)) {
                     keyevent_t e = (keyevent_t){

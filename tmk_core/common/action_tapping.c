@@ -39,7 +39,7 @@ void action_tapping_process(keyrecord_t record)
 {
     if (process_tapping(&record)) {
         if (!IS_NOEVENT(record.event)) {
-            debug("processed: "); debug_record(record); debug("\n");
+            //debug("processed: "); debug_record(record); debug("\n");
         }
     } else {
         if (!waiting_buffer_enq(record)) {
@@ -352,7 +352,7 @@ void waiting_buffer_scan_tap(void)
  */
 static void debug_tapping_key(void)
 {
-    debug("TAPPING_KEY="); debug_record(tapping_key); debug("\n");
+    //debug("TAPPING_KEY="); debug_record(tapping_key); debug("\n");
 }
 
 static void debug_waiting_buffer(void)

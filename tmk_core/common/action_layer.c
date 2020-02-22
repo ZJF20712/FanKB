@@ -153,7 +153,7 @@ action_t layer_switch_get_action(keyevent_t event)
     uint8_t layer = 0;
 #ifndef NO_TRACK_KEY_PRESS
     if (event.pressed) {
-        layer = current_layer_for_key(event.key);
+        layer = current_layer_for_key(event.key);//Find the keycode in highest layer with no TRANS
         layer_pressed[event.key.row][event.key.col] = layer;
     } else {
         layer = layer_pressed[event.key.row][event.key.col];

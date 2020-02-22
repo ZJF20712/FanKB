@@ -39,8 +39,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 void action_exec(keyevent_t event)
 {
     if (!IS_NOEVENT(event)) {
-        dprint("\n---- action_exec: start -----\n");
-        dprint("EVENT: "); debug_event(event); dprintln();
+        //dprint("\n---- action_exec: start -----\n");
+        //dprint("EVENT: "); debug_event(event); dprintln();
         hook_matrix_change(event);
     }
 
@@ -65,13 +65,13 @@ void process_action(keyrecord_t *record)
 
     if (IS_NOEVENT(event)) { return; }
 
-    action_t action = layer_switch_get_action(event);
-    dprint("ACTION: "); debug_action(action);
+    action_t action = layer_switch_get_action(event);//got keycode in the highest layer without TRANS
+    //dprint("ACTION: "); debug_action(action);
 #ifndef NO_ACTION_LAYER
-    dprint(" layer_state: "); layer_debug();
-    dprint(" default_layer_state: "); default_layer_debug();
+    //dprint(" layer_state: "); layer_debug();
+    //dprint(" default_layer_state: "); default_layer_debug();
 #endif
-    dprintln();
+    //dprintln();
 
     switch (action.kind.id) {
         /* Key and Mods */

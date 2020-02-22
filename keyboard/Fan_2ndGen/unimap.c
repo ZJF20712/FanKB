@@ -31,54 +31,95 @@ enum function_id {
     JMP_BL,
     RGBLED_ACTION = 0x0A,
     HOST_SWITCH,
+    TRICKY_ALT_F4,
 };
 enum function_opt {
+#ifdef KeyB_40Key
     ESC_GRV,
     ENT_QUOT,
     DOT_SLSH,
     UP_SLSH,
     L_SCLN,
     BSPC_BSLS,
+#endif
 };
 enum macro_id {
     HOME_PGUP,
     END_PGDN,
 };
-#define AC_FN0 ACTION_LAYER_MOMENTARY(1)
-#define AC_FN1 ACTION_LAYER_MOMENTARY(2)
-#define AC_FN2 ACTION_LAYER_MOMENTARY(3)
-//#define AC_FN3 ACTION_LAYER_
+enum RGB_opt{
+	Toggle = 0,
+	Mode_M,
+	Mode_P,
+	Hue_M,
+	Hue_P,
+	Sat_M,
+	Sat_P,
+	Val_M,
+	Val_P,
+};
+//Layer ctl
+#define AC_LM0 ACTION_LAYER_MOMENTARY(1)
+#define AC_LM1 ACTION_LAYER_MOMENTARY(2)
+#define AC_LM2 ACTION_LAYER_MOMENTARY(3)
+#define AC_LM3 ACTION_LAYER_MOMENTARY(4)
+#define AC_LM4 ACTION_LAYER_MOMENTARY(5)
+#define AC_LM5 ACTION_LAYER_MOMENTARY(6)
+#define AC_LM6 ACTION_LAYER_MOMENTARY(7)
+#define AC_LM7 ACTION_LAYER_MOMENTARY(8)
+//ACTION_FUNCTION_OPT(id, opt)
+//ACTION_FUNCTION(id)
 #define AC_BL  ACTION_FUNCTION(JMP_BL)
-//#define AC_
+#define AC_HB  ACTION_FUNCTION(HOST_SWITCH)
+#define AC_LESC  ACTION_FUNCTION(TRICKY_ESC_LSHIFT)
+#define AC_4_F4  ACTION_FUNCTION(TRICKY_ALT_F4)
+#define AC_RGB_TG   ACTION_FUNCTION_OPT(RGBLED_ACTION, Toggle)
+#define AC_RGB_MM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Mode_M)
+#define AC_RGB_MP   ACTION_FUNCTION_OPT(RGBLED_ACTION, Mode_P)
+#define AC_RGB_HM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Hue_M)
+#define AC_RGB_HP   ACTION_FUNCTION_OPT(RGBLED_ACTION, Hue_P)
+#define AC_RGB_SM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Sat_M)
+#define AC_RGB_SP   ACTION_FUNCTION_OPT(RGBLED_ACTION, Sat_P)
+#define AC_RGB_VM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Val_M)
+#define AC_RGB_VP   ACTION_FUNCTION_OPT(RGBLED_ACTION, Val_P)
+/*	0 toggle
+1 mode-	2 mode+
+3 hue- 	4 hue+
+5 sat- 	6 sat+
+7 val- 	8 val+
+*/
 #ifdef KEYMAP_SECTION_ENABLE
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] __attribute__ ((section (".keymap.keymaps"))) = {
 #else
 const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
 #endif
+	//Layer 0
     UNIMAP(
         BTN1,BTN2,BTN3,BTN4,BTN5,WH_U,WH_D, F20, F21, F22, F23, F24,
-        ESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,           PSCR,SLCK,PAUS,         VOLD,VOLU,MUTE,
-        GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
+        LESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,           PSCR,SLCK,PAUS,         VOLD,VOLU,MUTE,
+        GRV, 1,   2,   3,   4_F4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
         TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     BSLS,     DEL, END, PGDN,    P7,  P8,  P9,  PPLS,
         CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NUHS,ENT,                         P4,  P5,  P6,  PCMM,
         LSFT,NUBS,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     RO,  RSFT,          UP,           P1,  P2,  P3,  PENT,
-        LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,FN0, FN1, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
+        LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,LM0, LM1, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
         ),
+     //Layer 1
     UNIMAP(
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         GRV,      TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS,TRNS,TRNS,         TRNS,TRNS,TRNS,
         ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,      TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,INS,  PGUP,   PGDN,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,INS,  PGUP,   PGDN,     TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,TRNS,
         TRNS,LEFT,DOWN,RGHT,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,END,TRNS,     MUTE,VOLD,VOLU,    TRNS,     TRNS,TRNS
+        TRNS,RGB_TG,RGB_MM,RGB_MP,RGB_HM,RGB_HP,RGB_SM,RGB_SP,RGB_VM,RGB_VP,TRNS,TRNS,TRNS,TRNS,TRNS,      TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,END,TRNS,     MUTE,VOLD,VOLU,     TRNS,     TRNS,TRNS
         ),
+     //Layer2
     UNIMAP(
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         GRV,      TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS,TRNS,TRNS,         TRNS,TRNS,TRNS,
         ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,      TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,  TRNS,   TRNS,     TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,    TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,    TRNS,TRNS,                         TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,          TRNS,         TRNS,TRNS,TRNS,TRNS,
         BL,  TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,HOME,TRNS,TRNS,     MUTE,VOLD,VOLU,    TRNS,     TRNS,TRNS
         ),
@@ -106,6 +147,24 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 send_keyboard_report();
             }
             break;
+		case TRICKY_ALT_F4:
+			if (record->event.pressed) {
+                if ((get_mods() & MOD_BIT(KC_LALT))) {
+                    mod_keys_registered = KC_F4;
+                }
+                else {
+                    mod_keys_registered = KC_4;
+                }
+                register_code(mod_keys_registered);
+                send_keyboard_report();
+            }
+            else {
+                unregister_code(mod_keys_registered);
+                send_keyboard_report();
+            }
+            break;	
+#ifdef KeyB_40Key
+//For only for keyboard with less than 60 keys
         case MAGIC_RSHIFT:
             switch (opt){
                 case ESC_GRV:
@@ -150,6 +209,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 send_keyboard_report();
             }
             break;
+#endif
     }
     if (record->event.pressed) {
         switch (id) {
@@ -163,6 +223,12 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 break;
             case RGBLED_ACTION:
                 rgblight_action(opt);
+				    /*  0 toggle
+ 					   1 mode-    2 mode+
+ 					   3 hue-     4 hue+
+ 					   5 sat-     6 sat+
+ 					   7 val-     8 val+
+ 				   */
                 break;
             case HOST_SWITCH:
                 command_extra(KC_U);
