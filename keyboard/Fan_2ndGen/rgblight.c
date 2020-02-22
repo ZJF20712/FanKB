@@ -167,10 +167,10 @@ void rgblight_mode(uint8_t mode)
     if (rgblight_config.mode > 0) {
         rgblight_timer_enable();
     }
-    //
-    rgblight_config.mode = 2;
-    rgblight_config.hue = 480;
-    //
+    
+    //rgblight_config.mode = 2;
+    //rgblight_config.hue = 480;
+    
 
     if (rgblight_config.mode == 1) {
         rgblight_sethsv(rgblight_config.hue, rgblight_config.sat, rgblight_config.val);

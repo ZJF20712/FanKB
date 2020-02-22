@@ -49,24 +49,24 @@ enum macro_id {
 };
 enum RGB_opt{
 	Toggle = 0,
-	Mode_M,
-	Mode_P,
-	Hue_M,
-	Hue_P,
-	Sat_M,
-	Sat_P,
-	Val_M,
-	Val_P,
+	Mode_M = 1,
+	Mode_P = 2,
+	Hue_M  = 3,
+	Hue_P  = 4,
+	Sat_M  = 5,
+	Sat_P  = 6,
+	Val_M  = 7,
+	Val_P  = 8,
 };
 //Layer ctl
-#define AC_LM0 ACTION_LAYER_MOMENTARY(1)
-#define AC_LM1 ACTION_LAYER_MOMENTARY(2)
-#define AC_LM2 ACTION_LAYER_MOMENTARY(3)
-#define AC_LM3 ACTION_LAYER_MOMENTARY(4)
-#define AC_LM4 ACTION_LAYER_MOMENTARY(5)
-#define AC_LM5 ACTION_LAYER_MOMENTARY(6)
-#define AC_LM6 ACTION_LAYER_MOMENTARY(7)
-#define AC_LM7 ACTION_LAYER_MOMENTARY(8)
+#define AC_LM1 ACTION_LAYER_MOMENTARY(1)
+#define AC_LM2 ACTION_LAYER_MOMENTARY(2)
+#define AC_LM3 ACTION_LAYER_MOMENTARY(3)
+#define AC_LM4 ACTION_LAYER_MOMENTARY(4)
+#define AC_LM5 ACTION_LAYER_MOMENTARY(5)
+#define AC_LM6 ACTION_LAYER_MOMENTARY(6)
+#define AC_LM7 ACTION_LAYER_MOMENTARY(7)
+#define AC_LM8 ACTION_LAYER_MOMENTARY(8)
 //ACTION_FUNCTION_OPT(id, opt)
 //ACTION_FUNCTION(id)
 #define AC_BL  ACTION_FUNCTION(JMP_BL)
@@ -101,7 +101,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
         TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     BSLS,     DEL, END, PGDN,    P7,  P8,  P9,  PPLS,
         CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NUHS,ENT,                         P4,  P5,  P6,  PCMM,
         LSFT,NUBS,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     RO,  RSFT,          UP,           P1,  P2,  P3,  PENT,
-        LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,LM0, LM1, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
+        LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,LM1, LM2, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
         ),
      //Layer 1
     UNIMAP(
