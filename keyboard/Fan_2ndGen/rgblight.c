@@ -275,7 +275,6 @@ void rgblight_sethsv(uint16_t hue, uint8_t sat, uint8_t val)
         rgblight_config.sat = sat;
         rgblight_config.val = val;
         eeconfig_write_rgblight(rgblight_config.raw);
- //       dprintf("rgblight set hsv [EEPROM]: %u,%u,%u\n", rgblight_config.hue, rgblight_config.sat, rgblight_config.val);
     }
 }
 
@@ -358,9 +357,9 @@ void rgblight_task(void)
             case 19 ... 22:
                 rgblight_effect_snake(rgblight_config.mode-19); //0 fast
                 break;
-            /*case 23 ... 24:
+            case 23 ... 24:
                 rgblight_effect_knight(rgblight_config.mode-23);
-                break;*/
+                break;
         }
     }
 }
@@ -478,7 +477,7 @@ void rgblight_effect_layer(void)
                 break;
             }
         }
-        xprintf("top layer: %d\n",top_layer);
+        //xprintf("top layer: %d\n",top_layer);
         if (top_layer > 0) {
             if (top_layer == 7) setrgb(182, 182, 182, &sled[SRGBLED_NUM]);  // white for layer 7
             else sethsv((top_layer-1)*128, 255, 255, &sled[SRGBLED_NUM]); 
@@ -710,7 +709,6 @@ void rgblight_effect_snake(uint8_t interval)
         rgblight_set();
     }
 }
-/*
 void rgblight_effect_knight(uint8_t interval)
 {
     static int8_t pos = MATRIX_COLS - 1;
@@ -748,7 +746,7 @@ void rgblight_effect_knight(uint8_t interval)
             sethsv(current_hue, rgblight_config.sat, rgblight_config.val, &sled[SRGBLED_NUM]);
         }
     }
-}*/
+}
 
 #ifdef SUSPEND_ACTION
 void suspend_power_down_action(void)

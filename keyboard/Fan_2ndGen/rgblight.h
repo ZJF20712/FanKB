@@ -2,7 +2,7 @@
 #define RGBLIGHT_H
 
 #ifndef RGBLIGHT_MODES
-#define RGBLIGHT_MODES 22 
+#define RGBLIGHT_MODES 24
 #endif
 
 #ifndef RGBLIGHT_EFFECT_MAX_WAVES

@@ -15,7 +15,8 @@
 #include "timer.h"
 #include "suspend.h"
 
-extern bool force_usb;
+//extern bool force_bt;
+//extern bool usb_connected;
 bool kb_started = 0;
 
 static int8_t sendchar_func(uint8_t c)
@@ -67,9 +68,10 @@ int main(void)
         USB_USBTask();
 #endif
     }
-    if (USB_DeviceState == DEVICE_STATE_Configured) {
-        force_usb = true;
-    }
+    /*if (USB_DeviceState == DEVICE_STATE_Configured) {
+        force_bt = true;
+        usb_connected = true;
+    }*/
 //    print("\nUSB init\n");
 
     ble51_init();

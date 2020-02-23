@@ -32,6 +32,8 @@ enum function_id {
     RGBLED_ACTION = 0x0A,
     HOST_SWITCH,
     TRICKY_ALT_F4,
+    TRICKY_NKRO,
+    CAPS_TO_CTRL,
 };
 #ifdef KeyB_40Key
 enum function_opt {
@@ -57,7 +59,12 @@ enum RGB_opt{
 	Sat_P  = 6,
 	Val_M  = 7,
 	Val_P  = 8,
+    SWCTL = 9,
+    K_CAPS = 10,
 };
+
+static bool caps_is_ctrl = false;
+
 //Layer ctl
 #define AC_LM1 ACTION_LAYER_MOMENTARY(1)
 #define AC_LM2 ACTION_LAYER_MOMENTARY(2)
@@ -69,10 +76,13 @@ enum RGB_opt{
 #define AC_LM8 ACTION_LAYER_MOMENTARY(8)
 //ACTION_FUNCTION_OPT(id, opt)
 //ACTION_FUNCTION(id)
-#define AC_BL  ACTION_FUNCTION(JMP_BL)
-#define AC_HB  ACTION_FUNCTION(HOST_SWITCH)
-#define AC_LESC  ACTION_FUNCTION(TRICKY_ESC_LSHIFT)
-#define AC_4_F4  ACTION_FUNCTION(TRICKY_ALT_F4)
+#define AC_BL       ACTION_FUNCTION(JMP_BL)
+#define AC_USBT     ACTION_FUNCTION(HOST_SWITCH)
+#define AC_LESC     ACTION_FUNCTION(TRICKY_ESC_LSHIFT)
+#define AC_4_F4     ACTION_FUNCTION(TRICKY_ALT_F4)
+#define AC_NKRO     ACTION_FUNCTION(TRICKY_NKRO)
+#define AC_CASW     ACTION_FUNCTION_OPT(CAPS_TO_CTRL,  SWCTL)
+#define AC_CTPS     ACTION_FUNCTION_OPT(CAPS_TO_CTRL,  K_CAPS)
 #define AC_RGB_TG   ACTION_FUNCTION_OPT(RGBLED_ACTION, Toggle)
 #define AC_RGB_MM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Mode_M)
 #define AC_RGB_MP   ACTION_FUNCTION_OPT(RGBLED_ACTION, Mode_P)
@@ -99,7 +109,7 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
         LESC,      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,           PSCR,SLCK,PAUS,         VOLD,VOLU,MUTE,
         GRV, 1,   2,   3,   4_F4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,     INS, HOME,PGUP,    NLCK,PSLS,PAST,PMNS,
         TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,     BSLS,     DEL, END, PGDN,    P7,  P8,  P9,  PPLS,
-        CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NUHS,ENT,                         P4,  P5,  P6,  PCMM,
+        CTPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     NUHS,ENT,                         P4,  P5,  P6,  PCMM,
         LSFT,NUBS,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,     RO,  RSFT,          UP,           P1,  P2,  P3,  PENT,
         LCTL,LGUI,LALT,MHEN,          SPC,           HENK,KANA,RALT,LM1, LM2, RCTL,     LEFT,DOWN,RGHT,    P0,       PDOT,PEQL
         ),
@@ -108,10 +118,10 @@ const action_t actionmaps[][UNIMAP_ROWS][UNIMAP_COLS] PROGMEM = {
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         GRV,      TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS,TRNS,TRNS,         TRNS,TRNS,TRNS,
         ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, INS, DEL,      TRNS,TRNS,TRNS,    TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,INS,  PGUP,   PGDN,     TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,TRNS,
-        RGB_TG,LEFT,DOWN,RGHT,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
+        RGB_TG,TRNS,UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,INS,  PGUP,   PGDN,     TRNS,TRNS,TRNS,     TRNS,TRNS,TRNS,TRNS,
+        CASW,LEFT,DOWN,RGHT,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS,TRNS,                        TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,RGB_MM,RGB_MP,RGB_HM,RGB_HP,RGB_SM,RGB_SP,RGB_VM,RGB_VP,TRNS,TRNS,TRNS,TRNS,TRNS,      TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,          TRNS,          TRNS,TRNS,TRNS,TRNS,END,TRNS,     MUTE,VOLD,VOLU,     TRNS,     TRNS,TRNS
+        TRNS,TRNS,TRNS,TRNS,          USBT,          TRNS,TRNS,TRNS,TRNS,END,NKRO,     MUTE,VOLD,VOLU,     TRNS,     TRNS,TRNS
         ),
      //Layer2
     UNIMAP(
@@ -163,6 +173,30 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 send_keyboard_report();
             }
             break;	
+        case CAPS_TO_CTRL:
+            switch(opt){
+                case SWCTL:
+                    caps_is_ctrl = caps_is_ctrl ? false : true;
+                    break;
+                case K_CAPS:
+                    key_orig   = caps_is_ctrl? KC_CAPS  :KC_LCTRL;
+                    key_mod    = caps_is_ctrl? KC_LCTRL :KC_CAPS;
+                    if (record->event.pressed) {
+                        if (get_mods() & MOD_BIT(KC_LSHIFT)) {
+                            mod_keys_registered = key_mod;
+                        } else {
+                            mod_keys_registered = key_orig;
+                        }
+                        register_code(mod_keys_registered);
+                        send_keyboard_report();
+                    }else {
+                        unregister_code(mod_keys_registered);
+                        send_keyboard_report();
+                    }
+                    break;
+            }
+        break;
+
 #ifdef KeyB_40Key
 //For only for keyboard with less than 60 keys
         case MAGIC_RSHIFT:
@@ -223,15 +257,12 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 break;
             case RGBLED_ACTION:
                 rgblight_action(opt);
-				    /*  0 toggle
- 					   1 mode-    2 mode+
- 					   3 hue-     4 hue+
- 					   5 sat-     6 sat+
- 					   7 val-     8 val+
- 				   */
                 break;
             case HOST_SWITCH:
                 command_extra(KC_U);
+                break;
+            case TRICKY_NKRO:
+                command_extra(KC_M);
                 break;
         }
     }

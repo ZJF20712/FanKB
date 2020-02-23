@@ -16,10 +16,10 @@
 #include "command.h"
 #define TIMEOUT 100
 
-bool force_usb = false;
+bool force_bt = false;
 uint32_t kb_idle_timer = 0; 
-static bool usb_nkro_status = false;
-static bool usb_connected = false;
+static bool usb_nkro_status = true;
+bool usb_connected = false;
 
 uint8_t ble_set_code = 0;
 
@@ -58,12 +58,13 @@ void ble51_task(void)
             ble51_gets(TIMEOUT);
         }
     }
-
+    
     /* Bluetooth mode | USB mode */
+    /*
     if (!force_usb) {
         if (host_get_driver() != &ble51_driver) {
             clear_keyboard(); 
-            print("Bluetooth\n");
+            //print("Bluetooth\n");
             usb_nkro_status = keyboard_nkro;
             keyboard_nkro = 0;
             host_set_driver(&ble51_driver);
@@ -75,13 +76,42 @@ void ble51_task(void)
         if (host_get_driver() != &lufa_driver) {
             usb_connected = 1;
             clear_keyboard();
-            print("USB\n");
+            //print("USB\n");
             keyboard_nkro = usb_nkro_status;
             host_set_driver(&lufa_driver);
         } else if (USB_DeviceState != DEVICE_STATE_Configured) {
             force_usb = 0;
             usb_connected = 0;
         }           
+    }
+    */
+    if(USB_DeviceState == DEVICE_STATE_Configured)
+        usb_connected = 1;
+    else
+        usb_connected = 0;
+        
+    if(usb_connected){
+        if(!force_bt){
+            if(host_get_driver() != &lufa_driver){
+                clear_keyboard();
+                keyboard_nkro = usb_nkro_status;
+                host_set_driver(&lufa_driver);
+            }
+        }else{
+            if(host_get_driver() != &ble51_driver){
+                clear_keyboard();
+                usb_nkro_status = keyboard_nkro;
+                keyboard_nkro = 0;
+                host_set_driver(&ble51_driver);
+            }
+        }
+    }else{
+        if(host_get_driver() != &ble51_driver){
+            clear_keyboard();
+            usb_nkro_status = keyboard_nkro;
+            keyboard_nkro = 0;
+            host_set_driver(&ble51_driver);
+        }
     }
 }    
   
@@ -90,12 +120,11 @@ bool command_extra(uint8_t code)
     switch (code) {
         case KC_B:
             clear_keyboard();
-  //          print("\n\nbootloader... ");
             wait_ms(1000);
             bootloader_jump(); 
             break;
         case KC_U:
-            force_usb ^= 1;
+            force_bt ^= 1;
             return true;
         case KC_I:
         case KC_O:
@@ -104,6 +133,12 @@ bool command_extra(uint8_t code)
             return true;
         case KC_P:
             BLE51_PowerState ^= 1;
+            return true;
+        case KC_M:
+            if(host_get_driver() == &ble51_driver)
+                usb_nkro_status = ~usb_nkro_status;
+            else
+                keyboard_nkro = ~keyboard_nkro;
             return true;
         default:
             return false;   
