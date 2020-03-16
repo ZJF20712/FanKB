@@ -59,7 +59,7 @@ enum RGB_opt{
 	Sat_P  = 6,
 	Val_M  = 7,
 	Val_P  = 8,
-    SWCTL = 9,
+    MOD_CAPS  = 9,
     K_CAPS = 10,
 };
 
@@ -80,7 +80,7 @@ enum RGB_opt{
 #define AC_LESC     ACTION_FUNCTION(TRICKY_ESC_LSHIFT)
 #define AC_4_F4     ACTION_FUNCTION(TRICKY_ALT_F4)
 #define AC_NKRO     ACTION_FUNCTION(TRICKY_NKRO)
-#define AC_CASW     ACTION_FUNCTION_OPT(CAPS_TO_CTRL,  SWCTL)
+#define AC_CASW     ACTION_FUNCTION_OPT(CAPS_TO_CTRL,  MOD_CAPS)
 #define AC_CTPS     ACTION_FUNCTION_OPT(CAPS_TO_CTRL,  K_CAPS)
 #define AC_RGB_TG   ACTION_FUNCTION_OPT(RGBLED_ACTION, Toggle)
 #define AC_RGB_MM   ACTION_FUNCTION_OPT(RGBLED_ACTION, Mode_M)
@@ -175,12 +175,13 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
             break;	
         case CAPS_TO_CTRL:
             switch(opt){
-                case SWCTL:
-                    caps_is_ctrl = ~caps_is_ctrl;
+                case MOD_CAPS:
+                    if(record->event.pressed)
+                        caps_is_ctrl = ~caps_is_ctrl;
                     break;
                 case K_CAPS:
-                    key_orig   = caps_is_ctrl == 1 ? KC_CAPS  :KC_LCTRL;
-                    key_mod    = caps_is_ctrl == 1 ? KC_LCTRL :KC_CAPS;
+                    key_orig  = caps_is_ctrl ? KC_CAPS  :KC_LCTRL;
+                    key_mod   = caps_is_ctrl ? KC_LCTRL :KC_CAPS;
                     if (record->event.pressed) {
                         if (get_mods() & MOD_BIT(KC_LSHIFT)) {
                             mod_keys_registered = key_mod;
