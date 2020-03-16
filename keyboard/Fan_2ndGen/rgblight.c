@@ -340,6 +340,7 @@ void rgblight_task(void)
                 rgblight_effect_raindrop(rgblight_config.mode-6); // 1 fast, 2 normal
                 break;
             case 9:
+                //ERROR
                 rgblight_effect_horse_race(); 
                 break;
             case 10:

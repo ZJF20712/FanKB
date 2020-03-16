@@ -63,7 +63,6 @@ enum RGB_opt{
     K_CAPS = 10,
 };
 
-static bool caps_is_ctrl = false;
 
 //Layer ctl
 #define AC_LM1 ACTION_LAYER_MOMENTARY(1)
@@ -140,6 +139,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
     static uint8_t mod_keys_registered;
     static uint8_t key_mod;
     static uint8_t key_orig;
+    static uint8_t caps_is_ctrl = 0;
     switch (id) {
         case TRICKY_ESC_LSHIFT:
             if (record->event.pressed) {
@@ -176,11 +176,11 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
         case CAPS_TO_CTRL:
             switch(opt){
                 case SWCTL:
-                    caps_is_ctrl = caps_is_ctrl ? false : true;
+                    caps_is_ctrl = ~caps_is_ctrl;
                     break;
                 case K_CAPS:
-                    key_orig   = caps_is_ctrl? KC_CAPS  :KC_LCTRL;
-                    key_mod    = caps_is_ctrl? KC_LCTRL :KC_CAPS;
+                    key_orig   = caps_is_ctrl == 1 ? KC_CAPS  :KC_LCTRL;
+                    key_mod    = caps_is_ctrl == 1 ? KC_LCTRL :KC_CAPS;
                     if (record->event.pressed) {
                         if (get_mods() & MOD_BIT(KC_LSHIFT)) {
                             mod_keys_registered = key_mod;
