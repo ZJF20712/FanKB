@@ -557,51 +557,48 @@ void rgblight_effect_raindrop(uint8_t interval)
 
 void rgblight_effect_horse_race(void)
 {
-    static uint8_t step = 0;
     static uint8_t start_wait = 0;
     uint8_t i,j;
-    if (++step > 0) { 
-        memset(&sled[0], 0, 3 * SRGBLED_NUM);
+    memset(&sled[0], 0, 3 * SRGBLED_NUM);
+    if (horse_race_remain == 0) {
+        horse_race_remain = MATRIX_ROWS;
+        start_wait = 20; 
+        for (i=0; i<MATRIX_ROWS; i++) {
+            fading_single_key[i] = MATRIX_COLS + RGBLIGHT_EFFECT_HORSE_LENGTH - 1;
+            hue_single_key[i] = rand()%256; 
 #ifdef USE_WS2812
-        if (horse_race_remain == 0) {
-            horse_race_remain = MATRIX_ROWS;
-            start_wait = 20; 
-            for (i=0; i<MATRIX_ROWS; i++) {
-                fading_single_key[i] = MATRIX_COLS + RGBLIGHT_EFFECT_HORSE_LENGTH - 1;
-                hue_single_key[i] = rand()%256; 
-                memset(&led[0], 0, 3 * RGBLED_NUM);
-            }
-        }
+            memset(&led[0], 0, 3 * RGBLED_NUM);
 #endif
-        if (start_wait) { 
-            start_wait--;
-            return;
         }
-        for (j=0; j<MATRIX_ROWS; j++) {
-            if (fading_single_key[j] >= MATRIX_COLS + RGBLIGHT_EFFECT_HORSE_LENGTH) {
-                horse_race_remain = 0;
-                return;
-            } 
-            if (fading_single_key[j]) {
-                sethsv_s255(hue_single_key[j], 255, &sled[SRGBLED_NUM]);
-                for (i=MATRIX_COLS; i<MATRIX_COLS+RGBLIGHT_EFFECT_HORSE_LENGTH; i++) {
-                    uint8_t tmp_col = i-fading_single_key[j];
-                    if (tmp_col >= 0 && tmp_col < MATRIX_COLS) {
-                        sled[SLED_MATRIX_MASK[j][tmp_col]] = sled[SRGBLED_NUM];
-                    } 
-                }
-                uint8_t random_delay1, random_delay2;
-                random_delay1 = rand() % MATRIX_ROWS;
-                random_delay2 = rand() % MATRIX_ROWS;
-                if (j != random_delay1 && j != random_delay2) {
-                    if (--fading_single_key[j] == 0) { 
-                        if (horse_race_remain > 0) horse_race_remain--;
-                    }
-                }
-            } 
-        }
-        rgblight_set();
     }
+    if (start_wait) { 
+    start_wait--;
+    return;
+    }
+    for (j=0; j<MATRIX_ROWS; j++) {
+        if (fading_single_key[j] >= MATRIX_COLS + RGBLIGHT_EFFECT_HORSE_LENGTH) {
+            horse_race_remain = 0;
+            return;
+        } 
+        if (fading_single_key[j]) {
+            sethsv_s255(hue_single_key[j], 255, &sled[SRGBLED_NUM]);
+            for (i=MATRIX_COLS; i<MATRIX_COLS+RGBLIGHT_EFFECT_HORSE_LENGTH; i++) {
+                uint8_t tmp_col = i-fading_single_key[j];
+                if (tmp_col >= 0 && tmp_col < MATRIX_COLS) {
+                    sled[SLED_MATRIX_MASK[j][tmp_col]] = sled[SRGBLED_NUM];
+                } 
+            }
+            uint8_t random_delay1, random_delay2;
+            random_delay1 = rand() % MATRIX_ROWS;
+            random_delay2 = rand() % MATRIX_ROWS;
+            if (j != random_delay1 && j != random_delay2) {
+                if (--fading_single_key[j] == 0) { 
+                    if (horse_race_remain > 0) horse_race_remain--;
+                }
+            }
+        } 
+    }
+    rgblight_set();
 }
 
 void rgblight_effect_hit(void)
